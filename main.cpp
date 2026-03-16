@@ -1,28 +1,28 @@
 #include <iostream>
-#include <vector>
-#include <deque>
+#include <vector> //dynamic array 
+#include <deque> //double ended queue , stores in chunks
 
 using namespace std;
 
 void maxSlidingWindow(vector<int>& nums, int k) {
-    deque<int> dq;
-    vector<int> result;
+    deque<int> dq; // deque with name 'dq' stores indices/positions
+    vector<int> result; //dynamic array to store values pushed by deque
 
     for (int i = 0; i < nums.size(); i++) {
-        // 1. Remove indices that are out of the current window
+        //  Remove indices that are out of the current window
         if (!dq.empty() && dq.front() == i - k) {
             dq.pop_front();
         }
 
-        // 2. Remove elements smaller than the current one from the back
+        // Remove elements smaller than the current one from the back
         while (!dq.empty() && nums[dq.back()] < nums[i]) {
             dq.pop_back();
         }
 
-        // 3. Add current element's index
+        //  Add current element's index
         dq.push_back(i);
 
-        // 4. The front of the deque is the largest element for the window
+        //  The front of the deque is the largest element for the window
         if (i >= k - 1) {
             cout << nums[dq.front()] << " ";
         }
